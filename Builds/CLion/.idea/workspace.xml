@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="MyFirstJucePlugin" targetName="STANDALONE_PLUGIN" />
+      <config projectName="MyFirstJucePlugin" targetName="VST3" />
+      <config projectName="MyFirstJucePlugin" targetName="SHARED_CODE" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="121e7b55-2b97-4c1f-9558-fa68d2343a29" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/satoshi.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MacOSX/MyFirstJucePlugin.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../MacOSX/MyFirstJucePlugin.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../JuceLibraryCode/AppConfig.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../JuceLibraryCode/AppConfig.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../MyFirstJucePlugin.jucer" beforeDir="false" afterPath="$PROJECT_DIR$/../../MyFirstJucePlugin.jucer" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Source/PluginEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../Source/PluginEditor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Source/PluginEditor.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../Source/PluginEditor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Source/PluginProcessor.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../Source/PluginProcessor.h" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="OCResolveContextSettings">
+    <option name="configuration" value="0-SHARED_CODE" />
+  </component>
+  <component name="ProjectId" id="1Q0XhDVVXNVH3fnbbdtxST3ZZxI" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="CMake Application.STANDALONE_PLUGIN">
+    <configuration name="SHARED_CODE" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="MyFirstJucePlugin" TARGET_NAME="SHARED_CODE" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="STANDALONE_PLUGIN" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="MyFirstJucePlugin" TARGET_NAME="STANDALONE_PLUGIN" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="MyFirstJucePlugin" RUN_TARGET_NAME="STANDALONE_PLUGIN">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VST3" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="MyFirstJucePlugin" TARGET_NAME="VST3" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.SHARED_CODE" />
+      <item itemvalue="CMake Application.STANDALONE_PLUGIN" />
+      <item itemvalue="CMake Application.VST3" />
+    </list>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="121e7b55-2b97-4c1f-9558-fa68d2343a29" name="Default Changelist" comment="" />
+      <created>1566908605663</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1566908605663</updated>
+      <workItem from="1566908610810" duration="578000" />
+      <workItem from="1566909388661" duration="986000" />
+      <workItem from="1566911151525" duration="5626000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
