@@ -131,31 +131,24 @@ bool MyFirstJucePluginAudioProcessor::isBusesLayoutSupported (const BusesLayout&
 
 void MyFirstJucePluginAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
-    ScopedNoDenormals noDenormals;
-    auto totalNumInputChannels  = getTotalNumInputChannels();
-    auto totalNumOutputChannels = getTotalNumOutputChannels();
+    buffer.clear();
 
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
+    MidiBuffer processedMidi;
+    int time;
+    MidiMessage m;
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    for (MidiBuffer::Iterator i (midiMessages); i.getNextEvent (m, time);)
     {
-        auto* channelData = buffer.getWritePointer (channel);
+        if (m.isNoteOn())
+        {
+            uint8 newVel = (uint8)noteOnVelocity;
+            m = MidiMessage::noteOn(m.getChannel(), m.getNoteNumber(), newVel);
+        }
 
-        // ..do something to the data...
+        processedMidi.addEvent (m, time);
     }
+
+    midiMessages.swapWith(processedMidi);
 }
 
 //==============================================================================
