@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="xjgBvM" name="MyFirstJucePlugin" projectType="audioplug"
-              jucerVersion="5.4.4">
+              jucerVersion="5.4.4" pluginCharacteristicsValue="pluginProducesMidiOut,pluginWantsMidiIn"
+              pluginFormats="buildStandalone,buildVST3">
   <MAINGROUP id="wfj0Z0" name="MyFirstJucePlugin">
     <GROUP id="{16531FE6-E324-4750-52D6-2F47EE77E5A8}" name="Source">
       <FILE id="zqPvD3" name="PluginProcessor.cpp" compile="1" resource="0"
@@ -36,7 +37,7 @@
         <MODULEPATH id="juce_opengl" path="../../../../Applications/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <CLION targetFolder="Builds/CLion">
+    <CLION targetFolder="Builds/CLion" clionXcodeEnabled="1">
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="../../../../Applications/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="../../../../Applications/JUCE/modules"/>

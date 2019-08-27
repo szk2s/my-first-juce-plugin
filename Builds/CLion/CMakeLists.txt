@@ -26,23 +26,6 @@ set_source_files_properties ("PkgInfo" PROPERTIES MACOSX_PACKAGE_LOCATION .)
 set_source_files_properties ("../../JuceLibraryCode/modules/juce_audio_plugin_client/VST3/juce_VST3_Wrapper.cpp" PROPERTIES HEADER_FILE_ONLY TRUE)
 set_source_files_properties ("../../JuceLibraryCode/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp" PROPERTIES HEADER_FILE_ONLY TRUE)
 
-add_library (AU MODULE
-    "../../JuceLibraryCode/modules/juce_audio_plugin_client/AU/juce_AU_Wrapper.mm"
-    "../../JuceLibraryCode/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_1.mm"
-    "../../JuceLibraryCode/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_2.mm"
-    "../../JuceLibraryCode/modules/juce_audio_processors/format_types/juce_AU_Shared.h"
-    "../../JuceLibraryCode/include_juce_audio_plugin_client_AU.r"
-    "../../JuceLibraryCode/include_juce_audio_plugin_client_AU_1.mm"
-    "../../JuceLibraryCode/include_juce_audio_plugin_client_AU_2.mm"
-    "PkgInfo"
-)
-
-set_source_files_properties ("PkgInfo" PROPERTIES MACOSX_PACKAGE_LOCATION .)
-set_source_files_properties ("../../JuceLibraryCode/modules/juce_audio_plugin_client/AU/juce_AU_Wrapper.mm" PROPERTIES HEADER_FILE_ONLY TRUE)
-set_source_files_properties ("../../JuceLibraryCode/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_1.mm" PROPERTIES HEADER_FILE_ONLY TRUE)
-set_source_files_properties ("../../JuceLibraryCode/modules/juce_audio_plugin_client/juce_audio_plugin_client_AU_2.mm" PROPERTIES HEADER_FILE_ONLY TRUE)
-set_source_files_properties ("../../JuceLibraryCode/modules/juce_audio_processors/format_types/juce_AU_Shared.h" PROPERTIES HEADER_FILE_ONLY TRUE)
-
 add_executable (STANDALONE_PLUGIN
     "../../JuceLibraryCode/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp"
     "../../JuceLibraryCode/include_juce_audio_plugin_client_Standalone.cpp"
@@ -2867,11 +2850,6 @@ set_source_files_properties ("../../JuceLibraryCode/modules/juce_opengl/juce_ope
 set_source_files_properties ("../../JuceLibraryCode/AppConfig.h" PROPERTIES HEADER_FILE_ONLY TRUE)
 set_source_files_properties ("../../JuceLibraryCode/JuceHeader.h" PROPERTIES HEADER_FILE_ONLY TRUE)
 
-find_program (RC_COMPILER Rez NO_DEFAULT_PATHS PATHS "/Applications/Xcode.app/Contents/Developer/usr/bin")
-if (NOT RC_COMPILER)
-    message (WARNING "failed to find Rez; older resource-based AU plug-ins may not work correctly")
-endif (NOT RC_COMPILER)
-
 set_target_properties (SHARED_CODE PROPERTIES SUFFIX ".a")
 
 #------------------------------------------------------------------------------
@@ -2961,112 +2939,6 @@ add_custom_command (TARGET VST3 POST_BUILD
     COMMENT "Copying \"MyFirstJucePlugin.vst3\" to \"$ENV{HOME}/Library/Audio/Plug-Ins/VST3/\""
 )
 
-target_include_directories (AU PRIVATE
-    "../../JuceLibraryCode/modules/juce_audio_processors/format_types/VST3_SDK"
-    "../../JuceLibraryCode"
-    "../../JuceLibraryCode/modules"
-    "../../JuceLibraryCode/modules/juce_audio_plugin_client"
-)
-
-target_compile_definitions (AU PRIVATE
-    "_DEBUG=1"
-    "DEBUG=1"
-    "JUCER_XCODE_MAC_F6D2F4CF=1"
-    "JUCE_APP_VERSION=1.0.0"
-    "JUCE_APP_VERSION_HEX=0x10000"
-    "JucePlugin_Build_VST=0"
-    "JucePlugin_Build_VST3=0"
-    "JucePlugin_Build_AU=1"
-    "JucePlugin_Build_AUv3=0"
-    "JucePlugin_Build_RTAS=0"
-    "JucePlugin_Build_AAX=0"
-    "JucePlugin_Build_Standalone=0"
-    "JucePlugin_Build_Unity=0"
-)
-
-target_compile_options (AU PRIVATE
-    -mmacosx-version-min=10.11
-    -O0
-    -stdlib=libc++
-)
-
-if (RC_COMPILER)
-    set (AU_REZ_SOURCES
-        "${CMAKE_CURRENT_SOURCE_DIR}/../../JuceLibraryCode/include_juce_audio_plugin_client_AU.r"
-    )
-    set (AU_REZ_OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/MyFirstJucePlugin.rsrc")
-    target_sources (AU PRIVATE
-        ${AU_REZ_SOURCES}
-        ${AU_REZ_OUTPUT}
-    )
-    execute_process (COMMAND
-        ${RC_COMPILER}
-        -d ppc_$ppc -d i386_$i386 -d ppc64_$ppc64 -d x86_64_$x86_64 -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers -I "$(DEVELOPER_DIR)/Extras/CoreAudio/AudioUnits/AUPublic/AUBase" -I "$(DEVELOPER_DIR)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AudioUnit.framework/Headers"
-        -isysroot "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
-        -I "${PROJECT_SOURCE_DIR}/../../JuceLibraryCode/modules/juce_audio_processors/format_types/VST3_SDK"
-        -I "${PROJECT_SOURCE_DIR}/../../JuceLibraryCode"
-        -I "${PROJECT_SOURCE_DIR}/../../JuceLibraryCode/modules"
-        -I "${PROJECT_SOURCE_DIR}/../../JuceLibraryCode/modules/juce_audio_plugin_client"
-        ${AU_REZ_SOURCES}
-        -o ${AU_REZ_OUTPUT}
-    )
-    set_source_files_properties (${AU_REZ_OUTPUT} PROPERTIES
-        GENERATED TRUE
-        MACOSX_PACKAGE_LOCATION Resources
-    )
-endif (RC_COMPILER)
-
-set_target_properties (AU PROPERTIES
-    OUTPUT_NAME "MyFirstJucePlugin"
-    CXX_STANDARD 14
-    CXX_EXTENSIONS OFF
-    XCODE_ATTRIBUTE_CLANG_LINK_OBJC_RUNTIME NO
-    XCODE_ATTRIBUTE_COMBINE_HIDPI_IMAGES YES
-    XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "$(PROJECT_DIR)/build/$(CONFIGURATION)"
-    XCODE_ATTRIBUTE_COPY_PHASE_STRIP NO
-    XCODE_ATTRIBUTE_DEPLOYMENT_LOCATION YES
-    XCODE_ATTRIBUTE_DSTROOT /
-    XCODE_ATTRIBUTE_GCC_DYNAMIC_NO_PIC NO
-    XCODE_ATTRIBUTE_GCC_VERSION com.apple.compilers.llvm.clang.1_0
-    XCODE_ATTRIBUTE_GENERATE_PKGINFO_FILE YES
-    XCODE_ATTRIBUTE_INFOPLIST_FILE "${CMAKE_CURRENT_SOURCE_DIR}/Debug-Info-AU.plist"
-    XCODE_ATTRIBUTE_INFOPLIST_PREPROCESS NO
-    XCODE_ATTRIBUTE_INSTALL_PATH "$(HOME)/Library/Audio/Plug-Ins/Components/"
-    XCODE_ATTRIBUTE_LIBRARY_STYLE Bundle
-    XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER com.yourcompany.MyFirstJucePlugin
-    XCODE_ATTRIBUTE_PRODUCT_NAME "MyFirstJucePlugin"
-    XCODE_ATTRIBUTE_USE_HEADERMAP NO
-    XCODE_ATTRIBUTE_WRAPPER_EXTENSION component
-    MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Debug-Info-AU.plist"
-    XCODE_ATTRIBUTE_PRODUCT_NAME "MyFirstJucePlugin"
-    BUNDLE TRUE
-    BUNDLE_EXTENSION component
-    XCODE_ATTRIBUTE_MACH_O_TYPE "mh_bundle"
-)
-
-target_link_libraries (AU PRIVATE
-    SHARED_CODE
-    "-framework Accelerate"
-    "-framework AudioToolbox"
-    "-framework AudioUnit"
-    "-framework Carbon"
-    "-framework Cocoa"
-    "-framework CoreAudio"
-    "-framework CoreAudioKit"
-    "-framework CoreMIDI"
-    "-framework DiscRecording"
-    "-framework IOKit"
-    "-framework OpenGL"
-    "-framework QuartzCore"
-    "-framework WebKit"
-)
-
-add_custom_command (TARGET AU POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E remove_directory "$ENV{HOME}/Library/Audio/Plug-Ins/Components/MyFirstJucePlugin.component"
-    COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_BINARY_DIR}/MyFirstJucePlugin.component" "$ENV{HOME}/Library/Audio/Plug-Ins/Components/MyFirstJucePlugin.component"
-    COMMENT "Copying \"MyFirstJucePlugin.component\" to \"$ENV{HOME}/Library/Audio/Plug-Ins/Components/\""
-)
-
 target_include_directories (STANDALONE_PLUGIN PRIVATE
     "../../JuceLibraryCode/modules/juce_audio_processors/format_types/VST3_SDK"
     "../../JuceLibraryCode"
@@ -3147,7 +3019,7 @@ target_compile_definitions (SHARED_CODE PRIVATE
     "JUCE_APP_VERSION_HEX=0x10000"
     "JucePlugin_Build_VST=0"
     "JucePlugin_Build_VST3=1"
-    "JucePlugin_Build_AU=1"
+    "JucePlugin_Build_AU=0"
     "JucePlugin_Build_AUv3=0"
     "JucePlugin_Build_RTAS=0"
     "JucePlugin_Build_AAX=0"
@@ -3288,114 +3160,6 @@ add_custom_command (TARGET VST3 POST_BUILD
     COMMENT "Copying \"MyFirstJucePlugin.vst3\" to \"$ENV{HOME}/Library/Audio/Plug-Ins/VST3/\""
 )
 
-target_include_directories (AU PRIVATE
-    "../../JuceLibraryCode/modules/juce_audio_processors/format_types/VST3_SDK"
-    "../../JuceLibraryCode"
-    "../../JuceLibraryCode/modules"
-    "../../JuceLibraryCode/modules/juce_audio_plugin_client"
-)
-
-target_compile_definitions (AU PRIVATE
-    "_NDEBUG=1"
-    "NDEBUG=1"
-    "JUCER_XCODE_MAC_F6D2F4CF=1"
-    "JUCE_APP_VERSION=1.0.0"
-    "JUCE_APP_VERSION_HEX=0x10000"
-    "JucePlugin_Build_VST=0"
-    "JucePlugin_Build_VST3=0"
-    "JucePlugin_Build_AU=1"
-    "JucePlugin_Build_AUv3=0"
-    "JucePlugin_Build_RTAS=0"
-    "JucePlugin_Build_AAX=0"
-    "JucePlugin_Build_Standalone=0"
-    "JucePlugin_Build_Unity=0"
-)
-
-target_compile_options (AU PRIVATE
-    -mmacosx-version-min=10.11
-    -O3
-    -flto
-    -stdlib=libc++
-)
-
-if (RC_COMPILER)
-    set (AU_REZ_SOURCES
-        "${CMAKE_CURRENT_SOURCE_DIR}/../../JuceLibraryCode/include_juce_audio_plugin_client_AU.r"
-    )
-    set (AU_REZ_OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/MyFirstJucePlugin.rsrc")
-    target_sources (AU PRIVATE
-        ${AU_REZ_SOURCES}
-        ${AU_REZ_OUTPUT}
-    )
-    execute_process (COMMAND
-        ${RC_COMPILER}
-        -d ppc_$ppc -d i386_$i386 -d ppc64_$ppc64 -d x86_64_$x86_64 -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers -I "$(DEVELOPER_DIR)/Extras/CoreAudio/AudioUnits/AUPublic/AUBase" -I "$(DEVELOPER_DIR)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AudioUnit.framework/Headers"
-        -isysroot "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
-        -I "${PROJECT_SOURCE_DIR}/../../JuceLibraryCode/modules/juce_audio_processors/format_types/VST3_SDK"
-        -I "${PROJECT_SOURCE_DIR}/../../JuceLibraryCode"
-        -I "${PROJECT_SOURCE_DIR}/../../JuceLibraryCode/modules"
-        -I "${PROJECT_SOURCE_DIR}/../../JuceLibraryCode/modules/juce_audio_plugin_client"
-        ${AU_REZ_SOURCES}
-        -o ${AU_REZ_OUTPUT}
-    )
-    set_source_files_properties (${AU_REZ_OUTPUT} PROPERTIES
-        GENERATED TRUE
-        MACOSX_PACKAGE_LOCATION Resources
-    )
-endif (RC_COMPILER)
-
-set_target_properties (AU PROPERTIES
-    OUTPUT_NAME "MyFirstJucePlugin"
-    CXX_STANDARD 14
-    CXX_EXTENSIONS OFF
-    XCODE_ATTRIBUTE_CLANG_LINK_OBJC_RUNTIME NO
-    XCODE_ATTRIBUTE_COMBINE_HIDPI_IMAGES YES
-    XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "$(PROJECT_DIR)/build/$(CONFIGURATION)"
-    XCODE_ATTRIBUTE_DEAD_CODE_STRIPPING YES
-    XCODE_ATTRIBUTE_DEPLOYMENT_LOCATION YES
-    XCODE_ATTRIBUTE_DSTROOT /
-    XCODE_ATTRIBUTE_GCC_GENERATE_DEBUGGING_SYMBOLS NO
-    XCODE_ATTRIBUTE_GCC_SYMBOLS_PRIVATE_EXTERN YES
-    XCODE_ATTRIBUTE_GCC_VERSION com.apple.compilers.llvm.clang.1_0
-    XCODE_ATTRIBUTE_GENERATE_PKGINFO_FILE YES
-    XCODE_ATTRIBUTE_INFOPLIST_FILE "${CMAKE_CURRENT_SOURCE_DIR}/Release-Info-AU.plist"
-    XCODE_ATTRIBUTE_INFOPLIST_PREPROCESS NO
-    XCODE_ATTRIBUTE_INSTALL_PATH "$(HOME)/Library/Audio/Plug-Ins/Components/"
-    XCODE_ATTRIBUTE_LIBRARY_STYLE Bundle
-    XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER com.yourcompany.MyFirstJucePlugin
-    XCODE_ATTRIBUTE_PRODUCT_NAME "MyFirstJucePlugin"
-    XCODE_ATTRIBUTE_USE_HEADERMAP NO
-    XCODE_ATTRIBUTE_WRAPPER_EXTENSION component
-    MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Release-Info-AU.plist"
-    XCODE_ATTRIBUTE_PRODUCT_NAME "MyFirstJucePlugin"
-    BUNDLE TRUE
-    BUNDLE_EXTENSION component
-    XCODE_ATTRIBUTE_MACH_O_TYPE "mh_bundle"
-)
-
-target_link_libraries (AU PRIVATE
-    SHARED_CODE
-    "-framework Accelerate"
-    "-framework AudioToolbox"
-    "-framework AudioUnit"
-    "-framework Carbon"
-    "-framework Cocoa"
-    "-framework CoreAudio"
-    "-framework CoreAudioKit"
-    "-framework CoreMIDI"
-    "-framework DiscRecording"
-    "-framework IOKit"
-    "-framework OpenGL"
-    "-framework QuartzCore"
-    "-framework WebKit"
-)
-
-add_custom_command (TARGET AU POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E remove_directory "$ENV{HOME}/Library/Audio/Plug-Ins/Components/MyFirstJucePlugin.component"
-    COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_BINARY_DIR}/MyFirstJucePlugin.component" "$ENV{HOME}/Library/Audio/Plug-Ins/Components/MyFirstJucePlugin.component"
-    COMMENT "Copying \"MyFirstJucePlugin.component\" to \"$ENV{HOME}/Library/Audio/Plug-Ins/Components/\""
-)
-
 target_include_directories (STANDALONE_PLUGIN PRIVATE
     "../../JuceLibraryCode/modules/juce_audio_processors/format_types/VST3_SDK"
     "../../JuceLibraryCode"
@@ -3478,7 +3242,7 @@ target_compile_definitions (SHARED_CODE PRIVATE
     "JUCE_APP_VERSION_HEX=0x10000"
     "JucePlugin_Build_VST=0"
     "JucePlugin_Build_VST3=1"
-    "JucePlugin_Build_AU=1"
+    "JucePlugin_Build_AU=0"
     "JucePlugin_Build_AUv3=0"
     "JucePlugin_Build_RTAS=0"
     "JucePlugin_Build_AAX=0"
