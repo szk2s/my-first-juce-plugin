@@ -17,7 +17,17 @@ MyFirstJucePluginAudioProcessorEditor::MyFirstJucePluginAudioProcessorEditor (My
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setSize (800, 600);
+
+    midiVolume.setSliderStyle(Slider::LinearBarVertical);
+    midiVolume.setRange(0.0, 127.0, 1.0);
+    midiVolume.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
+    midiVolume.setPopupDisplayEnabled(true, false, this);
+    midiVolume.setTextValueSuffix(" Vol");
+    midiVolume.setValue(60.0);
+
+    addAndMakeVisible(&midiVolume);
+    midiVolume.addListener(this);
 }
 
 MyFirstJucePluginAudioProcessorEditor::~MyFirstJucePluginAudioProcessorEditor()
@@ -32,11 +42,16 @@ void MyFirstJucePluginAudioProcessorEditor::paint (Graphics& g)
 
     g.setColour (Colours::white);
     g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), Justification::centred, 1);
+    g.drawFittedText ("Midi Volume", 0, 0, getWidth(), 30, Justification::centred, 1);
 }
 
 void MyFirstJucePluginAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
+    midiVolume.setBounds (40, 30, 20, getHeight() - 60);
+}
+
+void MyFirstJucePluginAudioProcessorEditor::sliderValueChanged(Slider *slider) {
+    processor.noteOnVelocity = midiVolume.getValue();
 }
